@@ -1,0 +1,27 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      NODE_ENV: "dev"
+      DATABASE_URL: "postgresql://username:password@postgreCon:5432/urDB?schema=public"
+      JWT_SECRET_KEY: "dummy_jwt_secret_key"
+      GOOGLE_CLIENT_ID: "dummy_google_client_id"
+      GOOGLE_CLIENT_SECRET: "dummy_google_client_secret"
+      GOOGLE_CALLBACK_URL: "urURI/google/callback"
+    depends_on:
+      - postgreCon
+
+  postgreCon:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: urDB
+    ports:
+      - "5432:5432"
